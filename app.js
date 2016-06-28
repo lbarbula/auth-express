@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('cookie-session')
 var bodyParser = require('body-parser');
-
+var auth = require('./auth')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 require('dotenv').load()
@@ -25,6 +25,7 @@ app.use(cookieParser());
 app.use(session({keys: [process.env.SESSION_KEY1, process.env.SESSION_KEY2]}))
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(auth.passport.initialize())
 app.use('/', routes);
 app.use('/users', users);
 
